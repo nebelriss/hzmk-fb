@@ -1,7 +1,5 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { MouseEvent, useContext, useState } from 'react';
+import { MouseEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../config/firebase.config';
 import { firebaseContext } from '../context/firebase.context';
 
 export const LoginPage = () => {
@@ -9,24 +7,20 @@ export const LoginPage = () => {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
-
   const context = useContext(firebaseContext);
+
+  useEffect(() => {
+    if (context?.user) {
+      navigate('/');
+    }
+  }, [context?.user, navigate]);
 
   if (context?.authenticating) {
     return <div>loading</div>;
   }
 
-  if (context?.user) {
-    navigate('/');
-  }
-
-  async function onLogin(e: MouseEvent<HTMLElement>) {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (e) {
-      console.log(e);
-    }
+  function onLogin(e: MouseEvent<HTMLElement>) {
+    context?.login(email, password);
   }
 
   return (

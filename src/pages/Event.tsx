@@ -1,7 +1,5 @@
-import { signOut } from 'firebase/auth';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../config/firebase.config';
 import { firebaseContext } from '../context/firebase.context';
 
 export const EventPage = () => {
@@ -11,7 +9,7 @@ export const EventPage = () => {
 
   const onLogout = async () => {
     try {
-      await signOut(auth);
+      await context?.logout();
       navigate('/login');
     } catch (e) {
       console.log(e);
