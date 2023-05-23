@@ -1,8 +1,8 @@
-import { signOut } from "firebase/auth";
-import { auth } from "../config/firebase.config";
-import { useNavigate } from "react-router-dom";
-import { firebaseContext } from "../context/firebase.context";
-import { useContext } from "react";
+import { signOut } from 'firebase/auth';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../config/firebase.config';
+import { firebaseContext } from '../context/firebase.context';
 
 export const EventPage = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export const EventPage = () => {
   const onLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/login");
+      navigate('/login');
     } catch (e) {
       console.log(e);
     }

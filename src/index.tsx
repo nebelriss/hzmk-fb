@@ -1,24 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import reportWebVitals from "./reportWebVitals";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { LoginPage } from "./pages/Login";
-import { EventPage } from "./pages/Event";
-import { ProtectedEventRout } from "./routes/ProtectedEventRoute";
-import { FirebaseContextProvider } from "./context/firebase.context";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { FirebaseContextProvider } from './context/firebase.context';
+import './index.css';
+import { EventPage } from './pages/Event';
+import { LoginPage } from './pages/Login';
+import reportWebVitals from './reportWebVitals';
+import { ProtectedEventRout } from './routes/ProtectedEventRoute';
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
 
 const router = createBrowserRouter([
   {
-    path: "/login",
+    path: '/login',
     element: <LoginPage />,
   },
   {
-    path: "/",
+    path: '/',
     element: (
       <ProtectedEventRout>
         <EventPage />

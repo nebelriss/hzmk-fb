@@ -1,6 +1,6 @@
-import { User, onAuthStateChanged } from "firebase/auth";
-import { PropsWithChildren, createContext, useEffect, useState } from "react";
-import { auth } from "../config/firebase.config";
+import { User, onAuthStateChanged } from 'firebase/auth';
+import { PropsWithChildren, createContext, useEffect, useState } from 'react';
+import { auth } from '../config/firebase.config';
 
 interface FirebaseContext {
   authenticating: boolean;
