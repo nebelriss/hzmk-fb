@@ -1,25 +1,24 @@
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { MouseEvent, useEffect, useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { MouseEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase.config";
+import { firebaseContext } from "../context/firebase.context";
 
 export const LoginPage = () => {
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoading(true);
-    const sub = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate("/");
-      }
-      setLoading(false);
-      return sub;
-    });
-  }, [navigate]);
+  const context = useContext(firebaseContext);
+
+  if (context?.authenticating) {
+    return <div>loading</div>;
+  }
+
+  if (context?.user) {
+    navigate("/");
+  }
 
   async function onLogin(e: MouseEvent<HTMLElement>) {
     e.preventDefault();
@@ -28,10 +27,6 @@ export const LoginPage = () => {
     } catch (e) {
       console.log(e);
     }
-  }
-
-  if (loading) {
-    return <div>loading</div>;
   }
 
   return (

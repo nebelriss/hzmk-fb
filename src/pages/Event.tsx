@@ -1,24 +1,13 @@
-import { User, onAuthStateChanged, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase.config";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { firebaseContext } from "../context/firebase.context";
+import { useContext } from "react";
 
 export const EventPage = () => {
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<User | undefined>(undefined);
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoading(true);
-    const sub = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser ?? undefined);
-      }
-      setLoading(false);
-    });
-    return sub;
-  }, []);
+  const context = useContext(firebaseContext);
 
   const onLogout = async () => {
     try {
@@ -29,14 +18,14 @@ export const EventPage = () => {
     }
   };
 
-  if (loading) {
+  if (context?.authenticating) {
     return <div>loading</div>;
   }
 
   return (
     <div>
       <h1>Event Page</h1>
-      <p>current user: {user?.email}</p>
+      <p>current user: {context?.user?.email}</p>
       <button onClick={onLogout}>logout</button>
     </div>
   );

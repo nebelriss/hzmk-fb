@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { LoginPage } from "./pages/Login";
 import { EventPage } from "./pages/Event";
 import { ProtectedEventRout } from "./routes/ProtectedEventRoute";
+import { FirebaseContextProvider } from "./context/firebase.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -28,7 +29,9 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <FirebaseContextProvider>
+      <RouterProvider router={router} />
+    </FirebaseContextProvider>
   </React.StrictMode>
 );
 
